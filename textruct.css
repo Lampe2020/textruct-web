@@ -1,0 +1,18 @@
+:root {
+    color-scheme: dark;
+}
+
+noscript {
+    font-weight: bold;
+    color: darkred;
+    background-color: yellow;
+    border: 1px solid darkred;
+    border-radius: 1em;
+    padding: 1em;
+    position: fixed;
+    top: 1em;
+    left: 1em;
+}
+noscript::before {
+    content: "⚠ "; /* U+26A0 */
+}

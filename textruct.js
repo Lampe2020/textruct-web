@@ -1,5 +1,4 @@
 const conf = {
-    targetFPS: 60,
     targetTPS: 20,
     gameDisplayDimensions: [24, 80]
 }
@@ -8,6 +7,8 @@ const renderBuffers = {
     entities: [],
     ui: []
 }
+
+var varldlista = JSON.parse(localStorage.varldar);
 
 function render(renderElement) {
     const screenBuffer = [];
@@ -39,10 +40,35 @@ export function initGame(optioner) {
     
 }
 
+export function initMenu(menuelement) {
+    if (Object.keys(varldlista).length) {
+        const ingavarldar = menuelement.querySelector('#ingavarldar') || document.createElement('option');
+        ingavarldar.hidden = true;
+        ingavarldar.selected = false;
+        const varldvaljare = menuelement.querySelector('select[name=world]');
+        try {
+            for (const varldid of Object.keys(varldlista)) {
+                const varld = varldlista[varldid];
+                const varldoption = document.createElement('option');
+                varldoption.label = varld.namn || 'Onämnd värld';
+                varldoption.innerText = varldid || '<unknown>';
+                varldvaljare.appendChild(varldoption);
+                if (varldvaljare.value==='') {
+                    varldvaljare.value = varldid;
+                    varldvaljare.dispatchEvent(new InputEvent('input'));
+                }
+            }
+        } catch(err) {
+            ingavarldar.hidden = false;
+            ingavarldar.selected = true;
+            console.error(err);
+        }
+    } else {
+        console.log('Inga världar hittades!');
+    }
+}
+
 // Initialisera spelets kod så tidigt som möjligt
 document.addEventListener('DOMContentLoaded', ()=>{
-    const gameDisplayElement = document.querySelector('main');
-    
-    //setInterval(()=>{tick(gameDisplayElement, world)}, 1000/conf.targetTPS); // Simulationsloop
-    //setInterval(render, 1000/conf.targetFPS); // Renderloop TODO: Gör om den med optionell väntetid i en traditionell loop för att tillåta lägre FPS när bilden inte kan rendras inom den efterfrågade tiden
+    // Göra nånting här alls?
 }, {once:true});

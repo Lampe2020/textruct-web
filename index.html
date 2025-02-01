@@ -2,10 +2,15 @@
 <html lang="sv">
     <head>
         <meta charset="UTF-8">
-        <link rel="icon" href="/favicon.ico">
+        <link rel="icon" href="https://www.lampe2020.de/assets/svg/lampe2020_logo.svg">
         <title>Textruct • Lampe2020.de</title>
         <meta name="description" content="Spela Textruct, ett textgrafikbaserat utforskningsspel!">
-        <script type="module" src="textruct.js"></script>
+        <script type="module">
+            import * as textruct from './textruct.js';
+            window.initGame = textruct.initGame;
+            
+            
+        </script>
         <link rel="stylesheet" href="textruct.css">
     </head>
     <body>
@@ -17,10 +22,35 @@
             </noscript>
         </header>
         <main>
-            <!-- Själva spelet -->
+            <form id="mainmenu" action="javascript:console.log('Initialiserar spelet...');" onsubmit="initGame(this); this.hidden = true; document.getElementById('gamescreen').hidden = false;">
+                <fieldset>
+                    <legend>Textruct</legend>
+                    <!-- Huvudmenyn -->
+                    <label>Värld:
+                        <select autofocus name="world" oninput="const spelaknapp = document.getElementById('spelaknapp'); spelaknapp.disabled = false; if (this.value==='') { spelaknapp.value = 'Skapa ny...'; } else { spelaknapp.value = 'Spela...'; }">
+                            <option label="Skapa ny..."></option>
+                            <option label="--- Världar: ---" selected disabled></option>
+                            <option label="Testvärld">bla</option>
+                        </select>
+                    </label>
+                    <input id="spelaknapp" type="submit" value="Skapa värld..." disabled>
+                </fieldset>
+            </form>
+            <pre id="gamescreen" hidden>
+                <!-- Själva spelet -->
+                +--------[ Ladda en värld! ]--------+
+                |                                   |
+                |  Du har inte laddat någon värld.  |
+                | Om du ser den här skärmen, snälla |
+                | anmäl felet i GitHub-repositoriet |
+                |            (se nedan).            |
+                |                                   |
+                |   <button onclick="document.getElementById('gamescreen').hidden=true; document.getElementById('mainmenu').hidden=false;" style="border:0px solid transparent;background-color:transparent;font-family:inherit;font-size:inherit;margin:0px;padding: 0px;display:inline;">[Tillbaka till huvudmenyn...]</button>   |
+                +-----------------------------------+
+            </pre>
         </main>
-    <footer>
-        <small>Ett spel skapat av <a href="https://github.com/Lampe2020/textruct-web">Lampe2020</a>.</small>
-    </footer>
+        <footer>
+            <small>Ett spel skapat av <a href="https://github.com/Lampe2020/textruct-web">Lampe2020 på GitHub</a>.</small>
+        </footer>
     </body>
 </html>

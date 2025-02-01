@@ -16,3 +16,7 @@ noscript {
 noscript::before {
     content: "⚠ "; /* U+26A0 */
 }
+
+pre {
+    font-family: monospace;
+}
